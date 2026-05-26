@@ -1,16 +1,495 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <title>Axiomorphe Démos</title>
-  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiomorphe | Démos</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #0A0E17;
+    --sand: #0F1520;
+    --terracotta: #FF6A00;
+    --sage: #00E5FF;
+    --deep: #060A12;
+    --text: #E0E8F0;
+    --muted: #7A8FA0;
+    --white: #F0F4F8;
+    --glow-cyan: 0 0 20px rgba(0,229,255,.3), 0 0 40px rgba(0,229,255,.1);
+    --glow-orange: 0 0 20px rgba(255,106,0,.3), 0 0 40px rgba(255,106,0,.1);
+    --glass-border: rgba(255,255,255,.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(0,229,255,.045) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,106,0,.035) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .sticky-header { position: sticky; top: 0; z-index: 100; }
+
+  #lang-bar {
+    background: rgba(6,10,18,.9);
+    color: #5A6B7C;
+    text-align: right;
+    padding: 4px 6%;
+    font-size: 13px;
+    letter-spacing: .05em;
+    border-bottom: 1px solid rgba(0,229,255,.1);
+  }
+
+  #lang-bar button {
+    background: none;
+    border: none;
+    color: #5A6B7C;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: .05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: color .2s, text-shadow .3s;
+  }
+
+  #lang-bar button.active { color: #00E5FF; font-weight: 500; text-shadow: 0 0 10px rgba(0,229,255,.5); }
+  #lang-bar button:hover { color: #F0F4F8; }
+
+  .logo-axm{ width:220px; height:55px; }
+  .axm-dot{ opacity:0; transform-box:fill-box; transform-origin:center; animation:axmDotIn .55s cubic-bezier(.22,1,.36,1) forwards; }
+  .axm-dot.d1{animation-delay:.05s;} .axm-dot.d2{animation-delay:.12s;} .axm-dot.d3{animation-delay:.19s;}
+  .axm-dot.d4{animation-delay:.26s;} .axm-dot.d5{animation-delay:.33s;} .axm-dot.d6{animation-delay:.40s;}
+  @keyframes axmDotIn{ 0%{opacity:0; transform:translate(-14px,10px) scale(.2);} 100%{opacity:var(--o,1); transform:translate(0,0) scale(1);} }
+  .axm-link{ stroke-dasharray:30; stroke-dashoffset:30; opacity:0; animation:axmDraw .5s ease forwards; }
+  .axm-link.l1{animation-delay:.46s;} .axm-link.l2{animation-delay:.52s;}
+  @keyframes axmDraw{ 0%{opacity:0; stroke-dashoffset:30;} 100%{opacity:.35; stroke-dashoffset:0;} }
+  .axm-crystal{ stroke-dasharray:160; stroke-dashoffset:160; opacity:0; animation:axmCrystal .8s cubic-bezier(.65,0,.35,1) forwards, axmPulse 3.5s ease-in-out 1.6s infinite; animation-delay:.55s,1.6s; }
+  @keyframes axmCrystal{ 0%{opacity:0; stroke-dashoffset:160;} 30%{opacity:1;} 100%{opacity:1; stroke-dashoffset:0;} }
+  .axm-fill{ opacity:0; animation:axmFill .6s ease forwards; animation-delay:1.15s; }
+  @keyframes axmFill{ to{opacity:.08;} }
+  .axm-axis{ opacity:0; animation:axmFill2 .5s ease forwards; animation-delay:1.2s; }
+  @keyframes axmFill2{ to{opacity:.55;} }
+  .axm-word{ opacity:0; transform:translateX(8px); transform-box:fill-box; animation:axmWord .7s ease forwards; animation-delay:1.0s; }
+  @keyframes axmWord{ to{opacity:1; transform:translateX(0);} }
+  @keyframes axmPulse{ 0%,100%{ filter:drop-shadow(0 0 0px rgba(0,229,255,0)); } 50%{ filter:drop-shadow(0 0 6px rgba(0,229,255,.5)); } }
+
+  nav {
+    background-color: rgba(10,14,23,.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,229,255,.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 6%;
+    transition: box-shadow .3s, border-color .6s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(90deg, rgba(0,229,255,.06) 1px, transparent 1px), linear-gradient(rgba(0,229,255,.03) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity: .22;
+  }
+
+  nav > * { position: relative; z-index: 1; }
+  .logo { text-decoration: none; }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .03em;
+    transition: color .2s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00E5FF;
+    transition: width .25s;
+    box-shadow: 0 0 8px rgba(0,229,255,.5);
+  }
+
+  .nav-links a:hover { color: #00E5FF; text-shadow: 0 0 8px rgba(0,229,255,.3); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--terracotta);
+    color: var(--white) !important;
+    padding: 9px 20px;
+    border-radius: 2px;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    text-decoration: none;
+    transition: background .2s, transform .15s !important;
+    letter-spacing: 0 !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: #FF8C33 !important; transform: translateY(-1px); box-shadow: var(--glow-orange); }
+
+  main { position: relative; overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+  .blob1 { width: 500px; height: 500px; background: #00E5FF; top: -140px; right: -120px; opacity: .16; }
+  .blob2 { width: 380px; height: 380px; background: #FF6A00; bottom: 6%; left: 18%; opacity: .12; }
+  .blob3 { width: 280px; height: 280px; background: #00E5FF; top: 40%; left: -100px; opacity: .10; }
+
+  .hero {
+    min-height: calc(100vh - 88px);
+    display: grid;
+    grid-template-columns: 1fr .95fr;
+    align-items: center;
+    gap: 70px;
+    padding: 82px 6% 70px;
+    position: relative;
+  }
+
+  .hero-text { position: relative; z-index: 2; }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(0,229,255,.06);
+    color: #00E5FF;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: .05em;
+    padding: 8px 16px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(0,229,255,.15);
+    text-shadow: 0 0 10px rgba(0,229,255,.3);
+    border-left: 3px solid #00E5FF;
+    box-shadow: -3px 0 12px rgba(0,229,255,.2);
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #F0F4F8;
+    margin-bottom: 24px;
+  }
+  h1 em { font-style: normal; color: #FF6A00; text-shadow: 0 0 20px rgba(255,106,0,.3); }
+
+  .hero-sub {
+    font-size: 1.08rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 38px;
+  }
+
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary, .btn-secondary {
+    padding: 14px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: .95rem;
+    transition: background .2s, transform .15s, box-shadow .2s, border-color .3s;
+  }
+  .btn-primary { background: var(--terracotta); color: var(--white); box-shadow: var(--glow-orange); }
+  .btn-primary:hover { background: #FF8C33; transform: translateY(-2px); }
+  .btn-secondary { background: transparent; color: #00E5FF; border: 2px solid rgba(0,229,255,.4); }
+  .btn-secondary:hover { background: rgba(0,229,255,.1); transform: translateY(-2px); box-shadow: var(--glow-cyan); border-color: #00E5FF; }
+
+  .demo-panel {
+    position: relative;
+    z-index: 2;
+    min-height: 430px;
+  }
+
+  .panel-shell {
+    position: relative;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 4px;
+    padding: 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    backdrop-filter: blur(8px);
+    transform: skewX(-4deg);
+    overflow: hidden;
+  }
+
+  .panel-shell > * { transform: skewX(4deg); }
+
+  .panel-shell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #00E5FF;
+    box-shadow: 0 0 14px rgba(0,229,255,.6);
+  }
+
+  .panel-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #00E5FF;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .demo-list { display: grid; gap: 16px; }
+
+  .demo-card {
+    display: block;
+    background: rgba(255,255,255,.035);
+    border: 1px solid var(--glass-border);
+    border-left: 4px solid #FF6A00;
+    border-radius: 4px;
+    padding: 20px 22px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .25s, box-shadow .25s, border-color .3s, background .25s;
+  }
+
+  .demo-card:hover {
+    transform: translateY(-4px);
+    background: rgba(0,229,255,.045);
+    border-color: rgba(0,229,255,.2);
+    box-shadow: 0 16px 40px rgba(0,229,255,.08);
+  }
+
+  .demo-status {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(0,229,255,.08);
+    color: #00E5FF;
+    border: 1px solid rgba(0,229,255,.15);
+    margin-bottom: 12px;
+  }
+
+  .demo-card h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #F0F4F8;
+    font-size: 1.35rem;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .demo-card p {
+    color: var(--muted);
+    font-size: .94rem;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .demo-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: .03em;
+  }
+  .tag.orange { background: rgba(255,106,0,.1); color: #FF6A00; border: 1px solid rgba(255,106,0,.2); }
+  .tag.green { background: rgba(0,229,255,.08); color: #00E5FF; border: 1px solid rgba(0,229,255,.15); }
+  .tag.brown { background: rgba(255,184,83,.08); color: #FFB853; border: 1px solid rgba(255,184,83,.15); }
+
+  .placeholder-card {
+    border-left-color: #7A8FA0;
+    opacity: .72;
+  }
+
+  .note-section {
+    background: var(--sand);
+    border-top: 1px solid rgba(255,106,0,.15);
+    border-bottom: 1px solid rgba(255,106,0,.15);
+    box-shadow: inset 0 1px 20px rgba(255,106,0,.05), inset 0 -1px 20px rgba(255,106,0,.05);
+    padding: 72px 6%;
+  }
+
+  .note-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .note-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    padding: 28px;
+    backdrop-filter: blur(8px);
+  }
+
+  .note-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.12rem;
+    color: #F0F4F8;
+    margin-bottom: 10px;
+  }
+
+  .note-card p { color: var(--muted); font-size: .93rem; line-height: 1.7; }
+
+  footer {
+    background: #050810;
+    color: #5A6B7C;
+    text-align: center;
+    padding: 28px 6%;
+    font-size: .83rem;
+  }
+  footer a { color: #00E5FF; text-decoration: none; text-shadow: 0 0 8px rgba(0,229,255,.3); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 60px 6%; }
+    .demo-panel { min-height: auto; }
+    .nav-links { display: none; }
+    .note-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-  <h1>Axiomorphe — Démos</h1>
-  <p>Prototypes et démonstrations privées.</p>
+<div class="sticky-header">
+  <div id="lang-bar">
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+    &nbsp;|&nbsp;
+    <button id="btn-fr" class="active" onclick="setLang('fr')">FR</button>
+  </div>
 
-  <ul>
-    <li><a href="/cgbvrr/">CGBVRR</a></li>
-  </ul>
+  <nav id="navbar">
+    <a href="https://axiomorphe.ca/" class="logo" style="display:flex;align-items:center;">
+      <svg class="logo-axm" viewBox="0 0 320 80" role="img" aria-label="Axiomorphe">
+        <g>
+          <circle class="axm-dot d1" cx="14" cy="22" r="2.4" fill="#FF6A00" style="--o:1"/>
+          <circle class="axm-dot d2" cx="24" cy="14" r="1.9" fill="#FF6A00" style="--o:.75"/>
+          <circle class="axm-dot d3" cx="11" cy="36" r="1.8" fill="#00E5FF" style="--o:.6"/>
+          <circle class="axm-dot d4" cx="22" cy="30" r="1.6" fill="#FF6A00" style="--o:.85"/>
+          <circle class="axm-dot d5" cx="16" cy="50" r="1.5" fill="#00E5FF" style="--o:.5"/>
+          <circle class="axm-dot d6" cx="27" cy="42" r="1.4" fill="#FF6A00" style="--o:.6"/>
+          <line class="axm-link l1" x1="26" y1="20" x2="42" y2="33" stroke="#00E5FF" stroke-width="1"/>
+          <line class="axm-link l2" x1="25" y1="36" x2="42" y2="44" stroke="#00E5FF" stroke-width="1"/>
+          <path class="axm-fill" d="M44 18 L62 40 L44 62 L26 40 Z" fill="#00E5FF"/>
+          <path class="axm-crystal" d="M44 18 L62 40 L44 62 L26 40 Z" fill="none" stroke="#00E5FF" stroke-width="2.4" stroke-linejoin="round"/>
+          <line class="axm-axis" x1="44" y1="18" x2="44" y2="62" stroke="#00E5FF" stroke-width="0.9"/>
+          <line class="axm-axis" x1="26" y1="40" x2="62" y2="40" stroke="#00E5FF" stroke-width="0.9"/>
+        </g>
+        <text class="axm-word" x="80" y="50" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="30" letter-spacing="-0.5">
+          <tspan fill="#F0F4F8">Axiom</tspan><tspan fill="#00E5FF">orphe</tspan>
+        </text>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://axiomorphe.ca/" data-en="Main site" data-fr="Site principal">Site principal</a></li>
+      <li><a href="#projects" data-en="Projects" data-fr="Projets">Projets</a></li>
+      <li><a href="https://axiomorphe.ca/#contact" class="nav-cta" data-en="Start a project" data-fr="Démarrer un projet">Démarrer un projet</a></li>
+    </ul>
+  </nav>
+</div>
+
+<main>
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <section class="hero" id="projects">
+    <div class="hero-text">
+      <div class="hero-badge" data-en="Axiomorphe demo environment" data-fr="Environnement de démonstration Axiomorphe">Environnement de démonstration Axiomorphe</div>
+      <h1 data-en="A clean space for <em>client prototypes</em>." data-fr="Un espace propre pour les <em>prototypes clients</em>.">Un espace propre pour les <em>prototypes clients</em>.</h1>
+      <p class="hero-sub" data-en="This domain hosts selected demos, mockups, and in-progress previews. Public enough to review, separate enough to keep the main Axiomorphe site clean." data-fr="Ce domaine héberge des démonstrations, maquettes et aperçus en cours. Assez public pour réviser, assez séparé pour garder le site principal d’Axiomorphe propre.">Ce domaine héberge des démonstrations, maquettes et aperçus en cours. Assez public pour réviser, assez séparé pour garder le site principal d’Axiomorphe propre.</p>
+      <div class="hero-btns">
+        <a href="/cgbvrr/" class="btn-primary" data-en="Open CGBVRR demo" data-fr="Voir la démo CGBVRR">Voir la démo CGBVRR</a>
+        <a href="https://axiomorphe.ca/" class="btn-secondary" data-en="Return to Axiomorphe" data-fr="Retour à Axiomorphe">Retour à Axiomorphe</a>
+      </div>
+    </div>
+
+    <div class="demo-panel">
+      <div class="panel-shell">
+        <div class="panel-meta" data-en="Active previews" data-fr="Aperçus actifs">Aperçus actifs</div>
+        <div class="demo-list">
+          <a href="/cgbvrr/" class="demo-card">
+            <span class="demo-status" data-en="Live demo" data-fr="Démo active">Démo active</span>
+            <h2 data-en="CGBVRR" data-fr="CGBVRR">CGBVRR</h2>
+            <p data-en="Restigouche River watershed organization prototype, built as a polished public-facing conservation website." data-fr="Prototype pour le Conseil de gestion du bassin versant de la rivière Restigouche, conçu comme site public professionnel pour la conservation.">Prototype pour le Conseil de gestion du bassin versant de la rivière Restigouche, conçu comme site public professionnel pour la conservation.</p>
+            <div class="demo-tags">
+              <span class="tag orange" data-en="Institutional site" data-fr="Site institutionnel">Site institutionnel</span>
+              <span class="tag green" data-en="Bilingual web" data-fr="Web bilingue">Web bilingue</span>
+              <span class="tag brown" data-en="Prototype" data-fr="Prototype">Prototype</span>
+            </div>
+          </a>
+
+          <div class="demo-card placeholder-card">
+            <span class="demo-status" data-en="Coming soon" data-fr="À venir">À venir</span>
+            <h2 data-en="Future project" data-fr="Projet futur">Projet futur</h2>
+            <p data-en="New client demos can be added here without disturbing the main Axiomorphe site." data-fr="Les prochaines démos clients pourront être ajoutées ici sans déranger le site principal d’Axiomorphe.">Les prochaines démos clients pourront être ajoutées ici sans déranger le site principal d’Axiomorphe.</p>
+            <div class="demo-tags">
+              <span class="tag green" data-en="Prepared slot" data-fr="Espace préparé">Espace préparé</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="note-section">
+    <div class="note-grid">
+      <div class="note-card">
+        <h3 data-en="Separate from production" data-fr="Séparé de la production">Séparé de la production</h3>
+        <p data-en="Demos live here so the main company site stays focused, stable, and professional." data-fr="Les démos vivent ici afin que le site principal reste concentré, stable et professionnel.">Les démos vivent ici afin que le site principal reste concentré, stable et professionnel.</p>
+      </div>
+      <div class="note-card">
+        <h3 data-en="Review-friendly" data-fr="Facile à réviser">Facile à réviser</h3>
+        <p data-en="Clients can view a live prototype without confusing it with the final production domain." data-fr="Les clients peuvent consulter un prototype en ligne sans le confondre avec le domaine final de production.">Les clients peuvent consulter un prototype en ligne sans le confondre avec le domaine final de production.</p>
+      </div>
+      <div class="note-card">
+        <h3 data-en="Not indexed" data-fr="Non indexé">Non indexé</h3>
+        <p data-en="This demo hub is marked noindex, which discourages search engines from listing unfinished preview work." data-fr="Ce portail de démos est marqué noindex, ce qui décourage les moteurs de recherche d’indexer les aperçus non finalisés.">Ce portail de démos est marqué noindex, ce qui décourage les moteurs de recherche d’indexer les aperçus non finalisés.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 Axiomorphe <span data-en="Demo environment." data-fr="Environnement de démonstration.">Environnement de démonstration.</span> &nbsp;|&nbsp; <a href="https://axiomorphe.ca/">axiomorphe.ca</a></p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const txt = el.getAttribute('data-' + lang);
+      if (txt) el.innerHTML = txt;
+    });
+  }
+
+  setLang('fr');
+</script>
 </body>
 </html>
