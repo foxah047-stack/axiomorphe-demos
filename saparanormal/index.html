@@ -49,9 +49,63 @@ body::after{
 
 a{color:inherit}
 
+
+/* AXIOMORPHE CONSTRUCTION SIGNATURE */
+:root{--construction-bar-height:30px}
+.construction-banner{
+  position:fixed;top:0;left:0;right:0;z-index:650;
+  height:var(--construction-bar-height);
+  display:flex;align-items:center;justify-content:center;
+  background:
+    linear-gradient(90deg,rgba(184,50,42,.08),rgba(7,7,7,.98),rgba(197,162,74,.06)),
+    rgba(7,7,7,.96);
+  border-bottom:1px solid rgba(197,162,74,.16);
+  box-shadow:0 0 24px rgba(184,50,42,.07);
+  overflow:hidden;
+}
+.construction-marquee{
+  position:relative;
+  width:clamp(250px,30vw,340px);
+  height:100%;
+  overflow:hidden;
+  display:flex;align-items:center;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 22%,#000 78%,transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 22%,#000 78%,transparent 100%);
+}
+.construction-track{
+  display:flex;align-items:center;width:max-content;
+  animation:constructionMarquee 44s linear infinite;
+  will-change:transform;
+}
+.construction-run{
+  display:inline-flex;align-items:center;gap:64px;padding-right:64px;flex:0 0 auto;
+}
+.construction-unit{
+  display:inline-flex;align-items:center;gap:10px;flex:0 0 auto;
+  font-family:'Special Elite',monospace;
+  font-size:10px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--paper-dim);white-space:nowrap;
+  text-shadow:0 0 8px rgba(197,162,74,.18),0 0 14px rgba(184,50,42,.10);
+}
+.construction-crystal{
+  width:18px;height:22px;flex:0 0 auto;overflow:visible;
+  filter:drop-shadow(0 0 5px rgba(197,162,74,.26)) drop-shadow(0 0 9px rgba(184,50,42,.10));
+  animation:constructionCrystalPulse 4.2s ease-in-out infinite;
+}
+.cc-fill{fill:rgba(197,162,74,.035)}
+.cc-outline,.cc-axis{fill:none;stroke:var(--gold);stroke-linejoin:round;stroke-linecap:round}
+.cc-outline{stroke-width:2.15}.cc-axis{opacity:.56;stroke-width:1.15}
+.cc-bang-line{fill:none;stroke:var(--red);stroke-width:2.25;stroke-linecap:round;opacity:.98}
+.cc-bang-dot{fill:var(--red);opacity:.98}
+@keyframes constructionMarquee{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes constructionCrystalPulse{
+  0%,100%{opacity:.78;transform:scale(.985);filter:drop-shadow(0 0 4px rgba(197,162,74,.20)) drop-shadow(0 0 7px rgba(184,50,42,.08))}
+  50%{opacity:1;transform:scale(1.025);filter:drop-shadow(0 0 7px rgba(197,162,74,.38)) drop-shadow(0 0 13px rgba(184,50,42,.18))}
+}
+
 /* NAV */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;
+  position:fixed;top:var(--construction-bar-height);left:0;right:0;z-index:500;
   height:76px;padding:0 4rem;
   display:flex;align-items:center;justify-content:space-between;
   background:linear-gradient(to bottom,rgba(7,7,7,.98),rgba(7,7,7,.78));
@@ -320,11 +374,74 @@ footer{background:#050505;border-top:1px solid var(--redline);padding:3rem 4rem;
   nav{padding:0 2rem}.nav-links{gap:1.2rem}.hero{padding:8rem 2rem 4rem}.hero-layout,.mission-grid,.dossier-grid{grid-template-columns:1fr}.archive-panel{min-height:470px}.cards-grid{grid-template-columns:repeat(2,1fr)}section{padding:4.5rem 2rem}.section-header{display:block}.section-copy{margin-top:1rem}.evidence-list{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:680px){
+  :root{--construction-bar-height:28px}.construction-marquee{width:min(74vw,240px)}.construction-track{animation-duration:38s}.construction-unit{font-size:9px;letter-spacing:.14em}.construction-run{gap:48px;padding-right:48px}
   .nav-links{display:none}.hero-title{font-size:2.45rem}.archive-panel{display:none}.hero-layout{display:block}.cards-grid{grid-template-columns:1fr}.log-entry{grid-template-columns:1fr}.log-status{text-align:left}.footer-inner{display:block;text-align:center}.footer-links{justify-content:center;margin-top:1.2rem;flex-wrap:wrap}.hero-actions{display:grid}.btn{width:100%}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .construction-track{animation:none!important;transform:none!important}
+  .construction-crystal{animation:none!important}
 }
 </style>
 </head>
 <body>
+<div class="construction-banner" aria-label="Travail en cours">
+  <div class="construction-marquee">
+    <div class="construction-track">
+      <div class="construction-run"><span class="construction-unit"><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg><span>TRAVAIL EN COURS</span><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg></span><span class="construction-unit"><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg><span>TRAVAIL EN COURS</span><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg></span></div>
+      <div class="construction-run" aria-hidden="true"><span class="construction-unit"><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg><span>TRAVAIL EN COURS</span><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg></span><span class="construction-unit"><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg><span>TRAVAIL EN COURS</span><svg class="construction-crystal" viewBox="0 0 32 44" aria-hidden="true" focusable="false">
+          <path class="cc-fill" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-outline" d="M16 3 L29 22 L16 41 L3 22 Z"/>
+          <path class="cc-axis" d="M16 3 L16 41 M3 22 L29 22 M16 3 L3 22 M16 3 L29 22 M16 41 L3 22 M16 41 L29 22"/>
+          <path class="cc-bang-line" d="M16 12 L16 25"/>
+          <circle class="cc-bang-dot" cx="16" cy="31" r="2.1"/>
+        </svg></span></div>
+    </div>
+  </div>
+</div>
+
 <nav id="nav">
   <a href="#" class="nav-logo">
     <svg class="nav-logo-svg" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
