@@ -732,6 +732,190 @@ footer{background:#050505;border-top:1px solid var(--redline);padding:2rem 4rem;
   }
 }
 
+
+/* === DESKTOP DROPDOWN + SECTION LINK PATCH === */
+.nav-dropdown{position:relative}
+.nav-dropdown-panel{
+  position:absolute;
+  top:calc(100% + 14px);
+  left:50%;
+  min-width:220px;
+  padding:.55rem;
+  background:rgba(7,7,7,.98);
+  border:1px solid var(--redline);
+  box-shadow:0 22px 60px rgba(0,0,0,.45);
+  transform:translateX(-50%) translateY(-8px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;
+  backdrop-filter:blur(10px);
+}
+.nav-dropdown-panel::before{
+  content:'';
+  position:absolute;
+  left:0;
+  right:0;
+  top:-16px;
+  height:16px;
+}
+.nav-dropdown:hover .nav-dropdown-panel,
+.nav-dropdown:focus-within .nav-dropdown-panel{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+.nav-dropdown-panel a{
+  display:block;
+  padding:.75rem .85rem;
+  color:var(--red);
+  text-decoration:none;
+  font-family:'Cinzel',serif;
+  font-size:.68rem;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  white-space:nowrap;
+}
+.nav-dropdown-panel a:last-child{border-bottom:none}
+.nav-dropdown-panel a:hover{color:#d0483d;background:rgba(184,50,42,.055)}
+.section-link-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:1.25rem;
+}
+@media(max-width:680px){
+  .nav-dropdown-panel{display:none}
+  .section-link-actions{justify-content:stretch}
+  .section-link-actions .btn{width:100%}
+}
+
+
+/* === MOBILE TABLE + HAMBURGER PATCH === */
+.mobile-menu-toggle{
+  display:none;
+  width:44px;
+  height:44px;
+  border:1px solid rgba(197,162,74,.28);
+  background:rgba(12,11,10,.76);
+  color:var(--gold);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
+  margin-left:auto;
+}
+.mobile-menu-toggle span{
+  display:block;
+  width:20px;
+  height:1px;
+  background:currentColor;
+  transition:transform .25s ease,opacity .25s ease;
+}
+.mobile-menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.mobile-menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.mobile-menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mobile-menu-panel{
+  display:none;
+}
+
+@media(max-width:680px){
+  .mobile-menu-toggle{display:flex}
+  .mobile-menu-panel{
+    position:absolute;
+    top:76px;
+    left:1rem;
+    right:1rem;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+    background:rgba(7,7,7,.98);
+    border:1px solid var(--redline);
+    box-shadow:0 22px 60px rgba(0,0,0,.45);
+    transform-origin:top right;
+    transform:translateY(-10px) scaleY(.96);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .22s ease,transform .22s ease;
+    backdrop-filter:blur(10px);
+  }
+  .mobile-menu-panel.open{
+    opacity:1;
+    transform:translateY(0) scaleY(1);
+    pointer-events:auto;
+  }
+  .mobile-menu-panel a{
+    padding:1rem 1.1rem;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    color:var(--red);
+    text-decoration:none;
+    font-family:'Cinzel',serif;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+  }
+  .mobile-menu-panel a:last-child{border-bottom:none}
+  .mobile-menu-panel a:hover{color:#d0483d;background:rgba(184,50,42,.055)}
+
+  .dossier-list-box{overflow:hidden}
+  .dossier-list-head,
+  #dossiers .dossier-list-head,
+  #archives .dossier-list-head{
+    display:grid;
+    grid-template-columns:82px minmax(0,1fr) 84px;
+    gap:.55rem;
+    align-items:center;
+    padding:.85rem .75rem;
+    font-size:.62rem;
+    letter-spacing:.11em;
+  }
+  .dossier-list-head span:nth-child(3),
+  .dossier-list-head span:nth-child(4),
+  .dossier-list-row > div:nth-child(3),
+  .dossier-list-row > div:nth-child(4){
+    display:none;
+  }
+  #dossiers .dossier-list-row,
+  #archives .dossier-list-row,
+  .dossier-list-row{
+    display:grid;
+    grid-template-columns:82px minmax(0,1fr) 84px;
+    gap:.55rem;
+    align-items:center;
+    padding:.9rem .75rem;
+    max-width:100%;
+    overflow:hidden;
+  }
+  .dossier-list-row > div{
+    min-width:0;
+    max-width:100%;
+    overflow-wrap:normal;
+    word-break:normal;
+  }
+  .dossier-list-row > div:nth-child(1),
+  .dossier-list-row > div:nth-child(2),
+  .dossier-list-row > div:nth-child(5){
+    display:block;
+  }
+  .dossier-list-date,
+  .dossier-list-status{
+    font-size:.68rem;
+    line-height:1.35;
+    letter-spacing:.08em;
+    text-align:left;
+  }
+  .dossier-list-row > div:nth-child(1){
+    font-size:.64rem;
+    color:var(--gold);
+  }
+  .dossier-list-status{
+    font-size:.64rem;
+    text-align:left;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -740,11 +924,32 @@ footer{background:#050505;border-top:1px solid var(--redline);padding:2rem 4rem;
 <ul class="nav-links">
 <li><a class="active" href="#">Accueil</a></li>
 <li><a href="#mission">Mission</a></li>
-<li><a href="#dossiers">Dossiers</a></li>
-<li><a href="#archives">Archives</a></li>
+<li class="nav-dropdown"><a href="#dossiers" aria-haspopup="true">Dossiers</a>
+<div class="nav-dropdown-panel" aria-label="Menu dossiers">
+<a href="/dossier/">Voir les dossiers</a>
+<a href="/contact/">Soumettre un témoignage</a>
+</div>
+</li>
+<li class="nav-dropdown"><a href="#archives" aria-haspopup="true">Archives</a>
+<div class="nav-dropdown-panel" aria-label="Menu archives">
+<a href="/archives/">Consulter les archives</a>
+<a href="/dossier/">Dossiers récents</a>
+</div>
+</li>
 <li><a href="#nous-contacter">Nous contacter</a></li>
 <li><a href="#soutenir">Soutenir</a></li>
 </ul>
+<button class="mobile-menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu-panel">
+<span></span>
+<span></span>
+<span></span>
+</button>
+<div class="mobile-menu-panel" id="mobile-menu-panel">
+<a href="/dossier/">Dossier</a>
+<a href="/archives/">Archives</a>
+<a href="/contact/">Contact</a>
+<a href="/soutenir/">Soutenir</a>
+</div>
 </nav>
 
 <header class="hero">
@@ -823,6 +1028,9 @@ footer{background:#050505;border-top:1px solid var(--redline);padding:2rem 4rem;
 <div class="dossier-list-row"><div class="dossier-list-date">À venir</div><div class="dossier-list-date">À venir</div><div class="dossier-list-document"><a href="#">À venir</a></div><div class="dossier-list-place">À venir</div><div class="dossier-list-status">À venir</div></div>
 <div class="dossier-list-row"><div class="dossier-list-date">À venir</div><div class="dossier-list-date">À venir</div><div class="dossier-list-document"><a href="#">À venir</a></div><div class="dossier-list-place">À venir</div><div class="dossier-list-status">À venir</div></div>
 </div>
+<div class="section-link-actions">
+<a class="btn secondary" href="/dossier/">Voir tous les dossiers</a>
+</div>
 </div>
 </section>
 <section class="featured reveal" id="archives">
@@ -834,6 +1042,9 @@ footer{background:#050505;border-top:1px solid var(--redline);padding:2rem 4rem;
 <p class="section-copy">Les archives rassemblent les anciennes enquêtes et les informations conservées au fil du temps. Elles permettent de revisiter certains lieux, comparer les anciens dossiers et préparer de nouvelles enquêtes au même endroit.</p>
 </div>
 <div class="dossier-list-box archives-list-box"><div class="dossier-list-head archives-list-head"><span># Dossier</span><span>Date</span><span>Documents</span><span>Lieu</span><span>Statut</span></div><div class="dossier-list-row archives-list-row"><div class="dossier-list-date">À venir</div><div class="dossier-list-date">À venir</div><div class="dossier-list-document"><a href="#">À venir</a></div><div class="dossier-list-place">À venir</div><div class="dossier-list-status">À venir</div></div><div class="dossier-list-row archives-list-row"><div class="dossier-list-date">À venir</div><div class="dossier-list-date">À venir</div><div class="dossier-list-document"><a href="#">À venir</a></div><div class="dossier-list-place">À venir</div><div class="dossier-list-status">À venir</div></div><div class="dossier-list-row archives-list-row"><div class="dossier-list-date">À venir</div><div class="dossier-list-date">À venir</div><div class="dossier-list-document"><a href="#">À venir</a></div><div class="dossier-list-place">À venir</div><div class="dossier-list-status">À venir</div></div></div>
+<div class="section-link-actions">
+<a class="btn secondary" href="/archives/">Consulter les archives</a>
+</div>
 </div>
 </section>
 <section class="cta reveal" id="nous-contacter">
@@ -889,6 +1100,28 @@ const reveals=document.querySelectorAll('.reveal');
 const io=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add('visible'),i*80)}})},{threshold:.12});
 reveals.forEach(el=>io.observe(el));
 function triggerGlitch(card){const g=document.createElement('div');g.className='card-glitch';card.appendChild(g);setTimeout(()=>g.remove(),260)}
+const mobileMenuToggle=document.querySelector('.mobile-menu-toggle');
+const mobileMenuPanel=document.getElementById('mobile-menu-panel');
+if(mobileMenuToggle&&mobileMenuPanel){
+  function closeMobileMenu(){
+    mobileMenuPanel.classList.remove('open');
+    mobileMenuToggle.setAttribute('aria-expanded','false');
+  }
+  mobileMenuToggle.addEventListener('click',()=>{
+    const isOpen=mobileMenuPanel.classList.toggle('open');
+    mobileMenuToggle.setAttribute('aria-expanded',String(isOpen));
+  });
+  mobileMenuPanel.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMobileMenu));
+  document.addEventListener('click',event=>{
+    if(!mobileMenuPanel.classList.contains('open')) return;
+    if(event.target.closest('.mobile-menu-toggle')||event.target.closest('.mobile-menu-panel')) return;
+    closeMobileMenu();
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape') closeMobileMenu();
+  });
+}
+
 </script>
 </body>
 </html>
